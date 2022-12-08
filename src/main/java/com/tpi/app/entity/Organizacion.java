@@ -1,14 +1,20 @@
 package com.tpi.app.entity;
 
 import java.util.Date;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 
-@Entity(name = "organizaciones")
+@Entity
+@Table(name = "organizaciones")
 public class Organizacion {
 	
 	@Id
@@ -35,6 +41,9 @@ public class Organizacion {
 	
 	@Column(name = "clave_organizacion")
 	private String clave;
+	
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "organizacion", cascade = CascadeType.ALL, orphanRemoval = true)
+	private List<Evento> eventos;
 	
 	public Organizacion() {
 		super();
