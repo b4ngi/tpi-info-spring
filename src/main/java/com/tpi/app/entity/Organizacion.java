@@ -8,6 +8,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.GeneratedValue;
@@ -48,6 +49,14 @@ public class Organizacion {
 	public Organizacion() {
 		super();
 		// TODO Auto-generated constructor stub
+	}
+
+	public List<Evento> getEventos() {
+		return eventos;
+	}
+
+	public void setEventos(List<Evento> eventos) {
+		this.eventos = eventos;
 	}
 
 	public String getNombre() {
@@ -94,6 +103,14 @@ public class Organizacion {
 		return fechaAlta;
 	}
 	
+	public void setFechaAlta(Date fechaAlta) {
+		this.fechaAlta = fechaAlta;
+	}
+
+	public void setClave(String clave) {
+		this.clave = clave;
+	}
+
 	public String getClave() {
 		return clave;
 	}
