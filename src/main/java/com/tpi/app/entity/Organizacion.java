@@ -25,7 +25,7 @@ public class Organizacion {
 	@Column(name = "nombre_organizacion", length=20, nullable=false, unique=true)
 	private String nombre;
 	
-	@Column(name = "cuit_organizacion")
+	@Column(name = "cuit_organizacion", nullable=false, unique=true)
 	private Integer cuit;
 	
 	@Column(name = "direccion_organizacion")

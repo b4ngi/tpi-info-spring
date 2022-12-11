@@ -8,4 +8,10 @@ import com.tpi.app.entity.Organizacion;
 @Repository
 public interface IOrganizacionDao extends JpaRepository<Organizacion, Long>{
 
+	public Organizacion findByNombre(String nombre);
+	
+	public Organizacion findByCuit(Integer cuit);
+	
+	public long deleteByNombre(String nombre);
+	
 }

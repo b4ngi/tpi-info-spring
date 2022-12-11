@@ -4,6 +4,8 @@ package com.tpi.app.service;
 import java.util.Date;
 import java.util.List;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,8 +13,10 @@ import com.tpi.app.dao.IOrganizacionDao;
 import com.tpi.app.dto.OrganizacionDto;
 import com.tpi.app.entity.Evento;
 import com.tpi.app.entity.Organizacion;
+import com.tpi.app.wrapper.OrganizacionWrapper;
 
 @Service
+@Transactional
 public class OrganizacionServiceImpl implements IOrganizacionService {
 
 	@Autowired
@@ -21,23 +25,25 @@ public class OrganizacionServiceImpl implements IOrganizacionService {
 	@Override
 	public OrganizacionDto guardar(OrganizacionDto organizacionDto) {
 		
-		Organizacion nuevaOrganizacion = new Organizacion();
+		Organizacion nuevaOrganizacion = OrganizacionWrapper.dtoToEntity(organizacionDto);
+		nuevaOrganizacion = organizacionDao.save(nuevaOrganizacion);
+		organizacionDto = OrganizacionWrapper.entityToDto(nuevaOrganizacion);
 		
-		nuevaOrganizacion.setNombre(organizacionDto.getNombre());
-		nuevaOrganizacion.setCuit(organizacionDto.getCuit());
-		nuevaOrganizacion.setDireccion(organizacionDto.getDireccion());
-		nuevaOrganizacion.setTelefono(organizacionDto.getTelefono());
-		nuevaOrganizacion.setEmail(organizacionDto.getEmail());
-		nuevaOrganizacion.setClave("123aB");
-		
-		nuevaOrganizacion.setFechaAlta(new Date());
-		
-		//List<Evento> eventos = new List<Evento>();
-		//nuevaOrganizacion.setEventos(eventos);
-		
-		organizacionDao.save(nuevaOrganizacion);
-		
-		return null;
+		return organizacionDto;
 	}
 	
+	@Override
+	public Organizacion findByNombre(String nombre) {
+		return organizacionDao.findByNombre(nombre);
+	}
+	
+	@Override
+	public Organizacion findByCuit(Integer cuit) {
+		return organizacionDao.findByCuit(cuit);
+	}
+	
+	@Override
+	public long deleteByNombre(String nombre) {
+		return organizacionDao.deleteByNombre(nombre);
+	}
 }
