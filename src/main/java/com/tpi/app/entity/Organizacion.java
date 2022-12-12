@@ -59,6 +59,10 @@ public class Organizacion {
 		this.eventos = eventos;
 	}
 
+	public Long getId() {
+		return id;
+	}
+
 	public String getNombre() {
 		return nombre;
 	}
