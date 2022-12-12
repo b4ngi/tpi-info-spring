@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.UUID;
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -51,7 +52,7 @@ public class OrganizacionServiceImpl implements IOrganizacionService {
 		Organizacion nuevaOrganizacion = OrganizacionWrapper.dtoToEntity(organizacionDto, this.generarClave());
 		//log.info(" "+nuevaOrganizacion.getId());
 		
-		if(nuevaOrganizacion == null) {
+		if(nuevaOrganizacion.equals(null)) {
 			return null;
 		}
 		
@@ -76,6 +77,11 @@ public class OrganizacionServiceImpl implements IOrganizacionService {
 	@Override
 	public List<Organizacion> findAll(){
 		return organizacionDao.findAll();
+	}
+	
+	@Override
+	public Optional<Organizacion> findById(Long id) {
+		return organizacionDao.findById(id);
 	}
 	
 	@Override

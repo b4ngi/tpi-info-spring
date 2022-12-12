@@ -17,7 +17,6 @@ public class OrganizacionWrapper {
 		if(dto == null) return new Organizacion();
 		
 		try {
-			log.info("abc");
 			Organizacion entity = new Organizacion();
 			entity.setNombre(dto.getNombre());
 			entity.setCuit(dto.getCuit());

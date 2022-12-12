@@ -38,7 +38,7 @@ public class OrganizacionRestController {
 		Map<String, Object> response = new HashMap<>();
 		OrganizacionDto nuevaOrganizacion = organizacionService.guardar(organizacionDto);
 		
-		if(nuevaOrganizacion == null) {
+		if(nuevaOrganizacion.equals(null)) {
 			response.put("mensaje", "Error al intentar guardar la nueva organizacion");
 			return new ResponseEntity<Map<String,Object>>(response, HttpStatus.OK);
 		}

@@ -8,4 +8,6 @@ import com.tpi.app.entity.Evento;
 @Repository
 public interface IEventoDao extends JpaRepository<Evento, Long> {
 
+	public Evento findByNombre(String nombre);
+	
 }
