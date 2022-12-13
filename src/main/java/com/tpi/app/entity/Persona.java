@@ -11,6 +11,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 @Entity
 @Table(name = "personas")
@@ -20,14 +22,18 @@ public class Persona {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
+	@NotNull(message = "El nombre no puede ser nulo")
 	@Column(name = "nombre_persona", length=20, nullable=false)
 	private String nombre;
 	
+	@NotNull(message = "El apellido no puede ser nulo")
 	@Column(name = "apellido_persona", length=20, nullable=false)
 	private String apellido;
 	
-	@Column(name = "dni_persona", length=8, nullable=false)
-	private Integer dni;
+	@NotNull(message = "El dni no puede ser nulo")
+	@Size(min = 8, max = 8, message = "El DNI debe tener 8 digitos")
+	@Column(name = "dni_persona", length=8, unique=true)
+	private String dni;
 	
 	@Column(name = "estado_persona")
 	private Boolean estado;
@@ -66,11 +72,11 @@ public class Persona {
 		this.apellido = apellido;
 	}
 
-	public Integer getDni() {
+	public String getDni() {
 		return dni;
 	}
 
-	public void setDni(Integer dni) {
+	public void setDni(String dni) {
 		this.dni = dni;
 	}
 

@@ -79,6 +79,11 @@ public class EventoServiceImpl implements IEventoService {
 	}
 	
 	@Override
+	public List<Evento> findAll(){
+		return eventoDao.findAll();
+	}
+	
+	@Override
 	public Evento findByNombre(String nombre) {
 		return eventoDao.findByNombre(nombre);
 	}

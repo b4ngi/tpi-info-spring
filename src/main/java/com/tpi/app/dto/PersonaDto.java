@@ -12,6 +12,8 @@ public class PersonaDto implements Serializable {
 	
 	private String dni;
 	
+	private String clave;
+	
 	public PersonaDto() {
 		// TODO Auto-generated constructor stub
 	}
@@ -38,6 +40,14 @@ public class PersonaDto implements Serializable {
 
 	public void setDni(String dni) {
 		this.dni = dni;
+	}
+
+	public String getClave() {
+		return clave;
+	}
+
+	public void setClave(String clave) {
+		this.clave = clave;
 	}
 	
 	

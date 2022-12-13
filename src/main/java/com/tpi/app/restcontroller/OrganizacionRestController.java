@@ -25,7 +25,7 @@ import com.tpi.app.entity.Organizacion;
 import com.tpi.app.service.IOrganizacionService;
 import com.tpi.app.wrapper.OrganizacionWrapper;
 
-@RequestMapping("tpi/organizaciones")
+@RequestMapping("tpi/organizacion")
 @RestController
 public class OrganizacionRestController {
 	private static final Logger log = LoggerFactory.getLogger(OrganizacionRestController.class);
@@ -33,7 +33,7 @@ public class OrganizacionRestController {
 	@Autowired
 	private IOrganizacionService organizacionService;
 	
-	@PostMapping("/guardar")
+	@PostMapping("/registrar")
 	public ResponseEntity<Map<String, Object>> nuevaOrganizacion(@RequestBody OrganizacionDto organizacionDto){
 		Map<String, Object> response = new HashMap<>();
 		OrganizacionDto nuevaOrganizacion = organizacionService.guardar(organizacionDto);
