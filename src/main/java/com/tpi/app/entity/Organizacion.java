@@ -30,9 +30,9 @@ public class Organizacion {
 	private String nombre;
 	
 	@NotNull(message = "El cuit no puede ser nulo")
-	//@Size(min = 10, max = 10, message = "El CUIT debe tener 10 digitos")
+	@Size(min = 10, max = 10, message = "El CUIT debe tener 10 digitos")
 	@Column(name = "cuit_organizacion", nullable=false, unique=true)
-	private Integer cuit;
+	private String cuit;
 	
 	@Column(name = "direccion_organizacion")
 	private String direccion;
@@ -81,11 +81,11 @@ public class Organizacion {
 		this.nombre = nombre;
 	}
 	
-	public Integer getCuit() {
+	public String getCuit() {
 		return cuit;
 	}
 	
-	public void setCuit(Integer cuit) {
+	public void setCuit(String cuit) {
 		this.cuit = cuit;
 	}
 	

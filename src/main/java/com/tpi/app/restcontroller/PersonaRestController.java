@@ -35,6 +35,7 @@ public class PersonaRestController {
 		return new ResponseEntity<Map<String,Object>>(response, HttpStatus.OK);
 	}
 	
+	// Mostrar todas las personas activas
 	@GetMapping("/all")
 	public ResponseEntity<Map<String, Object>> all(){
 		Map<String, Object> response = new HashMap<>();
@@ -43,6 +44,7 @@ public class PersonaRestController {
 		return new ResponseEntity<Map<String,Object>>(response, HttpStatus.OK);
 	}
 	
+	// Mostrar personas ACTIVAS filtradas por apellido
 	@GetMapping("/apellido/{apellido}")
 	public ResponseEntity<Map<String, Object>> buscarPorApellido(@PathVariable(name = "apellido") String apellido){
 		Map<String, Object> response = new HashMap<>();
@@ -51,6 +53,7 @@ public class PersonaRestController {
 		return new ResponseEntity<Map<String,Object>>(response, HttpStatus.OK);
 	}
 	
+	// Mostrar persona por dni - No importa si esta activa o no
 	@GetMapping("/dni/{dni}")
 	public ResponseEntity<Map<String, Object>> buscarPorDni(@PathVariable(name = "dni") String dni){
 		Map<String, Object> response = new HashMap<>();

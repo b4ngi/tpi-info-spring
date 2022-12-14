@@ -28,55 +28,37 @@ public class EventoRestController {
 	@Autowired
 	private IEventoService eventoService;
 	
+	// Registrar un evento -> Si no se especifica una fecha de realizacion, se supone que es un evento recurrente
 	@PostMapping("/registrar")
 	public ResponseEntity<Map<String, Object>> nuevoEvento(@RequestBody EventoDto eventoDto){
 		Map<String, Object> response = new HashMap<>();
-		
-		EventoDto nuevoEvento = eventoService.guardar(eventoDto);
-		
-		if(nuevoEvento == null) {
-			response.put("mensaje", "clave de organizacion incorrecta o nombre de evento existente");
-		} else {
-			response.put("evento", nuevoEvento);
-			response.put("mensaje", "Evento guardado con exito");
-		}
+		response.put("evento", eventoService.guardar(eventoDto));
+		response.put("mensaje", "Evento guardado con exito");
 		return new ResponseEntity<Map<String,Object>>(response, HttpStatus.OK);
 	}
 	
+	// Se puede actualizar un evento, especificando el nombre del evento, asi como el nombre de la organizacion a la cual pertenece y su clave
 	@PutMapping("/actualizar")
 	public ResponseEntity<Map<String, Object>> actualizarEvento(@RequestBody EventoDto eventoDto){
 		Map<String, Object> response = new HashMap<>();
-		
-		//EventoDto eventoActualizado = eventoService.actualizar(eventoDto);
-		return null;
+		response.put("evento", eventoService.actualizar(eventoDto));
+		response.put("mensaje", "Evento actualizado con exito");
+		return new ResponseEntity<Map<String,Object>>(response, HttpStatus.OK);
 	}
 	
+	// Eliminacion de un evento(logica -> Atributo estado FALSE)
 	@PutMapping("/eliminar")
-	public ResponseEntity<Map<String, Object>> eliminarEvento(@RequestBody HashMap<String, Object> hashMap){
+	public ResponseEntity<Map<String, Object>> eliminarEvento(@RequestBody EventoDto eventoDto){
 		Map<String, Object> response = new HashMap<>();
-		
-		String respuesta = eventoService.eliminar(hashMap);
-		
-		if(respuesta == null) {
-			response.put("mensaje", "clave de organizacion incorrecta");
-		} else {
-			response.put("mensaje", respuesta);
-		}
-	return new ResponseEntity<Map<String,Object>>(response, HttpStatus.OK);
+		eventoService.eliminar(eventoDto);
+		response.put("mensaje", "Evento eliminado con exito");
+		return new ResponseEntity<Map<String,Object>>(response, HttpStatus.OK);
 	}
 	
 	@GetMapping("/all")
 	public ResponseEntity<Map<String, Object>> all(){
 		Map<String, Object> response = new HashMap<>();
-		
-		List<Evento> eventos = eventoService.findAll();
-		List<EventoDto> eventosMostrar = new ArrayList<EventoDto>();
-		
-		for (int i=0;i<eventos.size();i++) {
-			EventoDto eventoDto = EventoWrapper.entityToDto(eventos.get(i));
-			eventosMostrar.add(eventoDto);
-		}
-		response.put("organizaciones", eventosMostrar);
+		response.put("organizaciones", eventoService.findAll());
 		return new ResponseEntity<Map<String,Object>>(response, HttpStatus.OK);
 	}
 }

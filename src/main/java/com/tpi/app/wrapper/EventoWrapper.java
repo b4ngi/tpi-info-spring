@@ -17,7 +17,13 @@ public class EventoWrapper {
 		entity.setOrganizacion(organizacion);
 		entity.setFechaCreacion(new Date());
 		entity.setEstado(true);
-		entity.setVisibile(true);
+		
+		if(entity.getFechaRealizacion() == null) {
+			entity.setTipo("recurrente");
+		} else {
+			entity.setTipo("unico");
+		}
+		
 		return entity;
 	}
 	
@@ -29,6 +35,7 @@ public class EventoWrapper {
 		dto.setUbicacion(entity.getUbicacion());
 		dto.setFechaRealizacion(entity.getFechaRealizacion());
 		dto.setOrganizacion(entity.getOrganizacion().getNombre());
+		dto.setTipo(entity.getTipo());
 		
 		return dto;
 	}

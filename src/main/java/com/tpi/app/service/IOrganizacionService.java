@@ -18,7 +18,7 @@ public interface IOrganizacionService {
 	
 	public OrganizacionDto findByNombre(String nombre);
 	
-	public OrganizacionDto findByCuit(Integer cuit);
+	public OrganizacionDto findByCuit(String cuit);
 	
 	public List<OrganizacionDto> findAll();
 	

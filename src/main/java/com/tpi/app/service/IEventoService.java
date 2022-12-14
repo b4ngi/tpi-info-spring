@@ -1,6 +1,5 @@
 package com.tpi.app.service;
 
-import java.util.HashMap;
 import java.util.List;
 
 import com.tpi.app.dto.EventoDto;
@@ -12,7 +11,7 @@ public interface IEventoService {
 	
 	public EventoDto actualizar(EventoDto eventoDto);
 	
-	public String eliminar(HashMap<String, Object> hashMap);
+	public void eliminar(EventoDto eventoDto);
 	
 	public List<Evento> findAll();
 	

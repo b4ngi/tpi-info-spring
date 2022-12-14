@@ -12,6 +12,7 @@ public class EventoDto implements Serializable{
 	private Date fechaRealizacion;
 	private String organizacion;
 	private String claveOrg;
+	private String tipo;
 	
 	public String getNombre() {
 		return nombre;
@@ -43,5 +44,11 @@ public class EventoDto implements Serializable{
 	}
 	public void setClaveOrg(String claveOrg) {
 		this.claveOrg = claveOrg;
+	}
+	public String getTipo() {
+		return tipo;
+	}
+	public void setTipo(String tipo) {
+		this.tipo = tipo;
 	}
 }

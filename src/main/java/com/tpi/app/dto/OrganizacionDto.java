@@ -8,7 +8,7 @@ public class OrganizacionDto implements Serializable{
 
 	private String nombre;
 	
-	private Integer cuit;
+	private String cuit;
 	
 	private String direccion;
 	
@@ -30,11 +30,11 @@ public class OrganizacionDto implements Serializable{
 		this.nombre = nombre;
 	}
 
-	public Integer getCuit() {
+	public String getCuit() {
 		return cuit;
 	}
 
-	public void setCuit(Integer cuit) {
+	public void setCuit(String cuit) {
 		this.cuit = cuit;
 	}
 

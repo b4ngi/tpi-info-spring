@@ -12,6 +12,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
@@ -26,9 +27,11 @@ public class Evento {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
+	@NotNull(message = "El nombre no puede ser nulo")
 	@Column(name = "nombre_evento", length=20, nullable=false)
 	private String nombre;
 	
+	@NotNull(message = "La ubicacion no puede ser nula")
 	@Column(name = "ubicacion_evento")
 	private String ubicacion;
 	
@@ -42,8 +45,9 @@ public class Evento {
 	@Column(name = "estado_evento") // campo que indique si está activo el evento (estará inactivo si la fecha del mismo ya pasó)
 	private Boolean estado;
 	
-	@Column(name = "visibilidad_evento")
-	private Boolean visibile;
+	@NotNull(message = "El tipo del evento no puede ser nulo")
+	@Column(name = "tipo_evento", nullable=false)
+	private String tipo;
 	
 	@ManyToOne
 	@JoinColumn(name = "id_organizaciones")
@@ -103,13 +107,13 @@ public class Evento {
 	public void setEstado(Boolean estado) {
 		this.estado = estado;
 	}
-	
-	public Boolean getVisibile() {
-		return visibile;
+
+	public String getTipo() {
+		return tipo;
 	}
 
-	public void setVisibile(Boolean visibile) {
-		this.visibile = visibile;
+	public void setTipo(String tipo) {
+		this.tipo = tipo;
 	}
 
 	public Organizacion getOrganizacion() {

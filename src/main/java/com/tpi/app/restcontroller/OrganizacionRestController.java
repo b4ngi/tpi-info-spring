@@ -35,6 +35,7 @@ public class OrganizacionRestController {
 	@Autowired
 	private IOrganizacionService organizacionService;
 	
+	// Registrar una organizacion
 	@PostMapping("/registrar")
 	public ResponseEntity<Map<String, Object>> nuevaOrganizacion(@Valid @RequestBody OrganizacionDto organizacionDto){
 		Map<String, Object> response = new HashMap<>();
@@ -61,6 +62,7 @@ public class OrganizacionRestController {
 		return new ResponseEntity<Map<String,Object>>(response, HttpStatus.OK);
 	}
 	
+	// Buscar todas las organizaciones ACTIVAS
 	@GetMapping("/all")
 	public ResponseEntity<Map<String, Object>> all(){
 		Map<String, Object> response = new HashMap<>();
@@ -69,6 +71,7 @@ public class OrganizacionRestController {
 		return new ResponseEntity<Map<String,Object>>(response, HttpStatus.OK);
 	}
 	
+	// Buscar una organizacion ACTIVA por nombre
 	@GetMapping("/nombre/{nombreOrg}")
 	public ResponseEntity<Map<String, Object>> buscarPorNombre(@PathVariable(name = "nombreOrg") String nombreOrg){
 		Map<String, Object> response = new HashMap<>();
@@ -77,8 +80,9 @@ public class OrganizacionRestController {
 		return new ResponseEntity<Map<String,Object>>(response, HttpStatus.OK);
 	}
 	
+	// Buscar una organizacion ACTIVA por nombre
 	@GetMapping("/cuit/{cuitOrg}")
-	public ResponseEntity<Map<String, Object>> buscarPorCuit(@PathVariable(name = "cuitOrg") Integer cuitOrg){
+	public ResponseEntity<Map<String, Object>> buscarPorCuit(@PathVariable(name = "cuitOrg") String cuitOrg){
 		Map<String, Object> response = new HashMap<>();
 		response.put("organizacion", organizacionService.findByCuit(cuitOrg));
 		response.put("mensaje", "busqueda finalizada con exito");
