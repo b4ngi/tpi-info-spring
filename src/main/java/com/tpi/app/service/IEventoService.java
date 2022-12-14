@@ -13,7 +13,9 @@ public interface IEventoService {
 	
 	public void eliminar(EventoDto eventoDto);
 	
-	public List<Evento> findAll();
+	public List<EventoDto> findAll();
 	
 	public Evento findByNombre(String nombre);
+
+	public List<EventoDto> findByOrganizacion(String organizacion);
 }

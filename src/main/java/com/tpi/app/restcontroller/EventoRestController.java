@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -59,6 +60,15 @@ public class EventoRestController {
 	public ResponseEntity<Map<String, Object>> all(){
 		Map<String, Object> response = new HashMap<>();
 		response.put("organizaciones", eventoService.findAll());
+		return new ResponseEntity<Map<String,Object>>(response, HttpStatus.OK);
+	}
+	
+	// Buscar los eventos de una organizacion determinada
+	@GetMapping("organizacion/{organizacion}")
+	public ResponseEntity<Map<String, Object>> buscarPorOrganizacion(@PathVariable(name = "organizacion") String organizacion){
+		Map<String, Object> response = new HashMap<>();
+		response.put("organizaciones", eventoService.findByOrganizacion(organizacion));
+		response.put("mensaje", "Busqueda finalizada con exito");
 		return new ResponseEntity<Map<String,Object>>(response, HttpStatus.OK);
 	}
 }

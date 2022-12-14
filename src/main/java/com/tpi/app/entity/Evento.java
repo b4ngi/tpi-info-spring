@@ -13,6 +13,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
@@ -39,6 +40,7 @@ public class Evento {
 	private Date fechaCreacion;
 	
 	@JsonFormat(pattern="yyy-MM-dd HH:mm:ss")
+	//@Pattern(regexp="yyy-MM-dd HH:mm:ss", message="formato de fecha invalido")
 	@Column(name = "fecha_realizacion_evento")
 	private Date fechaRealizacion;
 	

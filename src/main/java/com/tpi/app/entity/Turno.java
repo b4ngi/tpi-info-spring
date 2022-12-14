@@ -22,8 +22,11 @@ public class Turno {
 	@Column(name = "codigo_turno")
 	private String codigo;
 	
-	@Column(name = "fecha_turno")
+	@Column(name = "fecha_alta")
 	private Date fechaCreacion;
+	
+	@Column(name = "fecha_evento")
+	private Date fechaEvento;
 	
 	@Column(name = "estado_turno")
 	private Boolean estado;
@@ -62,6 +65,14 @@ public class Turno {
 
 	public void setFechaCreacion(Date fechaCreacion) {
 		this.fechaCreacion = fechaCreacion;
+	}
+
+	public Date getFechaEvento() {
+		return fechaEvento;
+	}
+
+	public void setFechaEvento(Date fechaEvento) {
+		this.fechaEvento = fechaEvento;
 	}
 
 	public Boolean getEstado() {

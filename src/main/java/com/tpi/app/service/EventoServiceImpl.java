@@ -30,10 +30,8 @@ public class EventoServiceImpl implements IEventoService {
 	
 	@Autowired
 	private IOrganizacionDao organizacionDao;
-	
-	@Autowired
-	private IOrganizacionService organizacionService;
 
+	// Guardar un evento -> Se verifica que exista la organizacion, que la clave sea correcta, y que no exista un evento con el mismo nombre de la misma organizacion
 	@Override
 	public EventoDto guardar(EventoDto eventoDto) {
 		
@@ -60,6 +58,7 @@ public class EventoServiceImpl implements IEventoService {
 		return eventoDto;
 	}
 	
+	// Actualizar evento -> Se verifica que exista la organizacion, que la clave sea correcta y que el evento este activo
 	@Override
 	public EventoDto actualizar(EventoDto eventoDto) {
 		if(eventoDto.getClaveOrg() == null) throw new KeyIsNull();
@@ -88,6 +87,7 @@ public class EventoServiceImpl implements IEventoService {
 		
 	}
 	
+	// Eliminar evento --> Se verifica que la organizacion exista, y que la clave sea correcta
 	@Override
 	public void eliminar(EventoDto eventoDto) {
 		if(eventoDto.getClaveOrg() == null) throw new KeyIsNull();
@@ -109,21 +109,39 @@ public class EventoServiceImpl implements IEventoService {
 		throw new EventoNoEncontrado();
 	}
 	
+	// Buscar todos los eventos ACTIVOS
 	@Override
-	public List<Evento> findAll(){
+	public List<EventoDto> findAll(){
 		List<Evento> eventos = eventoDao.findAll();
 		List<EventoDto> eventosMostrar = new ArrayList<EventoDto>();
 		
 		for (int i=0;i<eventos.size();i++) {
+			if(!eventos.get(i).getEstado()) continue;
 			EventoDto eventoDto = EventoWrapper.entityToDto(eventos.get(i));
 			eventosMostrar.add(eventoDto);
 		}
-		return eventoDao.findAll();
+		return eventosMostrar;
 	}
 	
 	@Override
 	public Evento findByNombre(String nombre) {
 		return eventoDao.findByNombre(nombre).orElseThrow(() -> new EventoNoEncontrado());
+	}
+
+	// Buscar los eventos de una organizacion determinada
+	@Override
+	public List<EventoDto> findByOrganizacion(String organizacion) {
+		Organizacion organizacionObj = organizacionDao.findByNombre(organizacion).orElseThrow(() -> new OrganizacionNoEncontrada());
+		
+		List<Evento> eventosOrganizacion = organizacionObj.getEventos();
+		List<EventoDto> eventosDto = new ArrayList<>();
+		
+		for(Evento evento: eventosOrganizacion) {
+			if(!evento.getEstado()) continue;
+			EventoDto eventoDto = EventoWrapper.entityToDto(evento);
+			eventosDto.add(eventoDto);
+		}
+		return eventosDto;
 	}
 }
 	

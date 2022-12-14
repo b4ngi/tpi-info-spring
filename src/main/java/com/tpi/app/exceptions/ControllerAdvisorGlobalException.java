@@ -58,6 +58,13 @@ public class ControllerAdvisorGlobalException extends ResponseEntityExceptionHan
         return new ResponseEntity<Object>(response, HttpStatus.NOT_FOUND);
 	}
 	
+	@ExceptionHandler(FechaNecesaria.class)
+	public ResponseEntity<Object> handleFechaNecesaria() {
+        Map<String,Object> response = new HashMap<>();
+        response.put("message", "El evento solicitado es recurrente y debe ingresar una fechaEvento");
+        return new ResponseEntity<Object>(response, HttpStatus.NOT_FOUND);
+	}
+	
 	@ExceptionHandler(javax.validation.ConstraintViolationException.class)
 	public ResponseEntity<Object> constraintViolationException(javax.validation.ConstraintViolationException e){
         Map<String,Object> response = new HashMap<>();
