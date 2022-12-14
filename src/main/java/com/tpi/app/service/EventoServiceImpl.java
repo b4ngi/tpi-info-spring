@@ -9,9 +9,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.tpi.app.dao.IEventoDao;
+import com.tpi.app.dao.IOrganizacionDao;
 import com.tpi.app.dto.EventoDto;
 import com.tpi.app.entity.Evento;
 import com.tpi.app.entity.Organizacion;
+import com.tpi.app.exceptions.OrganizacionNoEncontrada;
 import com.tpi.app.wrapper.EventoWrapper;
 
 @Service
@@ -22,12 +24,15 @@ public class EventoServiceImpl implements IEventoService {
 	private IEventoDao eventoDao;
 	
 	@Autowired
+	private IOrganizacionDao organizacionDao;
+	
+	@Autowired
 	private IOrganizacionService organizacionService;
 
 	@Override
 	public EventoDto guardar(EventoDto eventoDto) {
 		
-		Organizacion organizacion = organizacionService.findByNombre(eventoDto.getOrganizacion());
+		Organizacion organizacion = organizacionDao.findByNombre(eventoDto.getOrganizacion()).orElseThrow(() -> new OrganizacionNoEncontrada());
 		List<Evento> eventosOrg = organizacion.getEventos();
 		
 		for(Evento evento: eventosOrg) {
@@ -49,7 +54,7 @@ public class EventoServiceImpl implements IEventoService {
 	
 	@Override
 	public EventoDto actualizar(EventoDto eventoDto) {
-		Organizacion organizacion = organizacionService.findByNombre(eventoDto.getOrganizacion());
+		Organizacion organizacion = organizacionDao.findByNombre(eventoDto.getOrganizacion()).orElseThrow(() -> new OrganizacionNoEncontrada());
 		if(!organizacion.getClave().equals(eventoDto.getClaveOrg())) {
 			return null;
 		}
@@ -61,7 +66,7 @@ public class EventoServiceImpl implements IEventoService {
 	public String eliminar(HashMap<String, Object> hashMap) {
 		Evento evento = this.findByNombre(""+hashMap.get("nombreEvento"));
 		
-		Organizacion organizacion = organizacionService.findByNombre(""+hashMap.get("nombreOrganizacion"));
+		Organizacion organizacion = organizacionDao.findByNombre(""+hashMap.get("nombreOrganizacion")).orElseThrow(() -> new OrganizacionNoEncontrada());
 		if(organizacion == null) {
 			return "nombre de organizacion incorrecta";
 		}

@@ -5,6 +5,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.validation.Valid;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -34,122 +36,52 @@ public class OrganizacionRestController {
 	private IOrganizacionService organizacionService;
 	
 	@PostMapping("/registrar")
-	public ResponseEntity<Map<String, Object>> nuevaOrganizacion(@RequestBody OrganizacionDto organizacionDto){
+	public ResponseEntity<Map<String, Object>> nuevaOrganizacion(@Valid @RequestBody OrganizacionDto organizacionDto){
 		Map<String, Object> response = new HashMap<>();
-		OrganizacionDto nuevaOrganizacion = organizacionService.guardar(organizacionDto);
-		
-		if(nuevaOrganizacion.equals(null)) {
-			response.put("mensaje", "Error al intentar guardar la nueva organizacion");
-			return new ResponseEntity<Map<String,Object>>(response, HttpStatus.OK);
-		}
-		
-		response.put("organizacion", nuevaOrganizacion);
+		response.put("organizacion", organizacionService.guardar(organizacionDto));
+		response.put("mensaje", "Organizacion registrada con exito");
 		return new ResponseEntity<Map<String,Object>>(response, HttpStatus.OK);
 	}
 
 	// Se envia en el cuerpo de la peticion la clave, y TODOS los campos(actualizados o no)
 	@PutMapping("/actualizar")
-	public ResponseEntity<Map<String, Object>> actualizarOrganizacion(@RequestBody HashMap<String, Object> hashMap){
+	public ResponseEntity<Map<String, Object>> actualizarOrganizacion(@RequestBody OrganizacionDto organizacionDto){
 		Map<String, Object> response = new HashMap<>();
-		
-		Organizacion organizacion = organizacionService.findByNombre(""+hashMap.get("nombre"));
-		
-		if(organizacion == null) {
-			response.put("mensaje", "No existe una organizacion con ese nombre.");
-			return new ResponseEntity<Map<String,Object>>(response, HttpStatus.OK);
-		}
-		
-		String claveRecibida = ""+hashMap.get("clave");
-		
-		log.info(claveRecibida);
-		log.info(organizacion.getClave());
-		
-		if(organizacion.getClave().equals(claveRecibida)){
-			OrganizacionDto orgActualizada = organizacionService.actualizar(organizacion, hashMap);
-			
-			if(orgActualizada == null) {
-				response.put("mensaje", "No se pudo actualizar la informacion de la organizacion.");
-			}
-			
-			response.put("organizacion", orgActualizada);
-		}else {
-			response.put("mensaje", "Clave incorrecta");
-		}
-	return new ResponseEntity<Map<String, Object>>(response, HttpStatus.OK);
+		response.put("organizacion", organizacionService.actualizar(organizacionDto));
+		response.put("mensaje", "Organizacion actualizada con exito");
+		return new ResponseEntity<Map<String, Object>>(response, HttpStatus.OK);
 	}
 
 	// Se envia en el cuerpo de la peticion la clave y el nombre de la organizacion
 	@PutMapping("/eliminar")
-	public ResponseEntity<Map<String, Object>> eliminarOrganizacion(@RequestBody HashMap<String, Object> hashMap){
+	public ResponseEntity<Map<String, Object>> eliminarOrganizacion(@RequestBody OrganizacionDto organizacionDto){
 		Map<String, Object> response = new HashMap<>();
-		
-		Organizacion organizacion = organizacionService.findByNombre(""+hashMap.get("nombre"));
-		
-		if(organizacion == null) {
-			response.put("mensaje", "No existe una organizacion con ese nombre.");
-			return new ResponseEntity<Map<String,Object>>(response, HttpStatus.OK);
-		}
-		
-		String claveRecibida = ""+hashMap.get("clave");
-		
-		if(organizacion.getClave().equals(claveRecibida)) {
-			long numEliminados = organizacionService.deleteByNombre(organizacion.getNombre());
-			
-			if(numEliminados == 1) {
-				response.put("mensaje", "organizacion eliminada con exito");
-			} else {
-				response.put("mensaje", "error al eliminar la organizacion");
-			}
-		} else {
-			response.put("mensaje", "Clave incorrecta");
-		}
+		organizacionService.eliminar(organizacionDto);
+		response.put("mensaje", "Organizacion eliminada con exito");
 		return new ResponseEntity<Map<String,Object>>(response, HttpStatus.OK);
 	}
 	
 	@GetMapping("/all")
 	public ResponseEntity<Map<String, Object>> all(){
 		Map<String, Object> response = new HashMap<>();
-		
-		List<Organizacion> organizaciones = organizacionService.findAll();
-		List<OrganizacionDto> organizacionesMostrar = new ArrayList<OrganizacionDto>();
-		
-		for (int i=0;i<organizaciones.size();i++) {
-		      
-		      OrganizacionDto organizacionDto = OrganizacionWrapper.entityToDto(organizaciones.get(i));
-		      organizacionesMostrar.add(organizacionDto);
-		    }
-		
-		response.put("organizaciones", organizacionesMostrar);
+		response.put("organizaciones", organizacionService.findAll());
+		response.put("mensaje", "Busqueda realizada con exito");
 		return new ResponseEntity<Map<String,Object>>(response, HttpStatus.OK);
 	}
 	
 	@GetMapping("/nombre/{nombreOrg}")
 	public ResponseEntity<Map<String, Object>> buscarPorNombre(@PathVariable(name = "nombreOrg") String nombreOrg){
 		Map<String, Object> response = new HashMap<>();
-		
-		Organizacion organizacion = organizacionService.findByNombre(nombreOrg);
-		if(organizacion == null) {
-			response.put("mensaje", "no hay resultados.");
-		} else {
-			OrganizacionDto organizacionResp = OrganizacionWrapper.entityToDto(organizacion);
-			response.put("organizacion", organizacionResp);
-			response.put("mensaje", "busqueda finalizada con exito");
-		}
+		response.put("organizacion", organizacionService.findByNombre(nombreOrg));
+		response.put("mensaje", "busqueda finalizada con exito");
 		return new ResponseEntity<Map<String,Object>>(response, HttpStatus.OK);
 	}
 	
 	@GetMapping("/cuit/{cuitOrg}")
 	public ResponseEntity<Map<String, Object>> buscarPorCuit(@PathVariable(name = "cuitOrg") Integer cuitOrg){
 		Map<String, Object> response = new HashMap<>();
-		
-		Organizacion organizacion = organizacionService.findByCuit(cuitOrg);
-		if(organizacion == null) {
-			response.put("mensaje", "no hay resultados.");
-		} else {
-			OrganizacionDto organizacionResp = OrganizacionWrapper.entityToDto(organizacion);
-			response.put("organizacion", organizacionResp);
-			response.put("mensaje", "busqueda finalizada con exito");
-		}
+		response.put("organizacion", organizacionService.findByCuit(cuitOrg));
+		response.put("mensaje", "busqueda finalizada con exito");
 		return new ResponseEntity<Map<String,Object>>(response, HttpStatus.OK);
 	}
 	

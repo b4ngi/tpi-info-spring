@@ -11,6 +11,9 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 
@@ -22,9 +25,12 @@ public class Organizacion {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
+	@NotNull(message = "El nombre no puede ser nulo")
 	@Column(name = "nombre_organizacion", length=20, nullable=false, unique=true)
 	private String nombre;
 	
+	@NotNull(message = "El cuit no puede ser nulo")
+	//@Size(min = 10, max = 10, message = "El CUIT debe tener 10 digitos")
 	@Column(name = "cuit_organizacion", nullable=false, unique=true)
 	private Integer cuit;
 	
@@ -34,6 +40,7 @@ public class Organizacion {
 	@Column(name = "telefono_organizacion")
 	private Integer telefono;
 	
+	@Email(message = "Formato de mail incorrecto")
 	@Column(name = "email_organizacion")
 	private String email;
 	
@@ -42,6 +49,9 @@ public class Organizacion {
 	
 	@Column(name = "clave_organizacion")
 	private String clave;
+	
+	@Column(name = "estado_organizacion")
+	private Boolean estado;
 	
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "organizacion", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<Evento> eventos;
@@ -117,6 +127,14 @@ public class Organizacion {
 
 	public String getClave() {
 		return clave;
+	}
+
+	public Boolean getEstado() {
+		return estado;
+	}
+
+	public void setEstado(Boolean estado) {
+		this.estado = estado;
 	}
 	
 }

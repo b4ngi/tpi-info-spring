@@ -13,9 +13,9 @@ public interface IOrganizacionDao extends JpaRepository<Organizacion, Long>{
 
 	public Optional<Organizacion> findById(Long id);
 	
-	public Organizacion findByNombre(String nombre);
+	public Optional<Organizacion> findByNombre(String nombre);
 	
-	public Organizacion findByCuit(Integer cuit);
+	public Optional<Organizacion> findByCuit(Integer cuit);
 	
 	public long deleteByNombre(String nombre);
 	

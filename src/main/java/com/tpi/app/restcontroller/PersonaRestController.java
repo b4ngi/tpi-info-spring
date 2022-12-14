@@ -42,7 +42,7 @@ public class PersonaRestController {
 		response.put("mensaje", "Busqueda realizada con exito");
 		return new ResponseEntity<Map<String,Object>>(response, HttpStatus.OK);
 	}
-
+	
 	@GetMapping("/apellido/{apellido}")
 	public ResponseEntity<Map<String, Object>> buscarPorApellido(@PathVariable(name = "apellido") String apellido){
 		Map<String, Object> response = new HashMap<>();

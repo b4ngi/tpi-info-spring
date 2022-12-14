@@ -16,6 +16,8 @@ public class OrganizacionDto implements Serializable{
 	
 	private String email;
 	
+	private String clave;
+	
 	public OrganizacionDto() {
 		// TODO Auto-generated constructor stub
 	}
@@ -58,6 +60,14 @@ public class OrganizacionDto implements Serializable{
 
 	public void setEmail(String email) {
 		this.email = email;
+	}
+
+	public String getClave() {
+		return clave;
+	}
+
+	public void setClave(String clave) {
+		this.clave = clave;
 	}
 	
 	

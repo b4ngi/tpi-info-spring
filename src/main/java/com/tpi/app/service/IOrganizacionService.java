@@ -1,6 +1,5 @@
 package com.tpi.app.service;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
 
@@ -13,15 +12,17 @@ public interface IOrganizacionService {
 	
 	public OrganizacionDto guardar(OrganizacionDto organizacionDto);
 	
-	public OrganizacionDto actualizar(Organizacion organizacion, HashMap<String, Object> hashMap);
+	public OrganizacionDto actualizar(OrganizacionDto organizacionDto);
 	
-	public Optional<Organizacion> findById(Long id);
+	public OrganizacionDto findById(Long id);
 	
-	public Organizacion findByNombre(String nombre);
+	public OrganizacionDto findByNombre(String nombre);
 	
-	public Organizacion findByCuit(Integer cuit);
+	public OrganizacionDto findByCuit(Integer cuit);
 	
-	public List<Organizacion> findAll();
+	public List<OrganizacionDto> findAll();
 	
 	public long deleteByNombre(String nombre);	// devuelve la cantidad de registros eliminados. Como el nombre es campo unico, si elimina con exito devuelve 1.
+
+	void eliminar(OrganizacionDto organizacionDto);
 }

@@ -38,11 +38,9 @@ public class PersonaServiceImpl implements IPersonaService {
 	
 	@Override
 	public PersonaDto guardar(PersonaDto personaDto) {
-		
 		Persona nuevaPersona = PersonaWrapper.dtoToEntity(personaDto, this.generarClave());
 		nuevaPersona = personaDao.save(nuevaPersona);
 		personaDto = PersonaWrapper.entityToDto(nuevaPersona);
-		
 		return personaDto;
 	}
 
@@ -93,7 +91,7 @@ public class PersonaServiceImpl implements IPersonaService {
 		Persona persona = personaDao.findByDni(personaDto.getDni()).orElseThrow(() -> new PersonaNoEncontrada());
 		if(personaDto.getClave().equals(persona.getClave())) {
 			persona.setEstado(false);
-		}
+		} 
 	}
 	
 }

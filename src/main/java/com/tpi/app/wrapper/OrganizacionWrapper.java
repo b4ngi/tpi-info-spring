@@ -15,20 +15,17 @@ public class OrganizacionWrapper {
 	
 	public static Organizacion dtoToEntity(OrganizacionDto dto, String clave) {
 		if(dto == null) return new Organizacion();
-		
-		try {
-			Organizacion entity = new Organizacion();
-			entity.setNombre(dto.getNombre());
-			entity.setCuit(dto.getCuit());
-			entity.setDireccion(dto.getDireccion());
-			entity.setTelefono(dto.getTelefono());
-			entity.setEmail(dto.getEmail());
-			entity.setClave(clave);
-			entity.setFechaAlta(new Date());
-			return entity;
-		} catch(Exception e) {
-			return null;
-		}
+
+		Organizacion entity = new Organizacion();
+		entity.setNombre(dto.getNombre());
+		entity.setCuit(dto.getCuit());
+		entity.setDireccion(dto.getDireccion());
+		entity.setTelefono(dto.getTelefono());
+		entity.setEmail(dto.getEmail());
+		entity.setClave(clave);
+		entity.setFechaAlta(new Date());
+		entity.setEstado(true);
+		return entity;
 	}
 	
 	public static OrganizacionDto entityToDto(Organizacion entity) {
@@ -40,20 +37,7 @@ public class OrganizacionWrapper {
 		dto.setDireccion(entity.getDireccion());
 		dto.setTelefono(entity.getTelefono());
 		dto.setEmail(entity.getEmail());
-		
+		dto.setClave(entity.getClave());
 		return dto;
 	}
-	
-	public static Organizacion hashMapToEntity(Organizacion organizacion, HashMap<String, Object> hashMap) {
-		try {
-			organizacion.setCuit(Integer.parseInt(""+hashMap.get("cuit")));
-			organizacion.setDireccion(""+hashMap.get("direccion"));
-			organizacion.setTelefono(Integer.parseInt(""+hashMap.get("telefono")));
-			organizacion.setEmail(""+hashMap.get("email"));
-			return organizacion;
-		} catch(Exception e) {
-			return null;
-		}
-	}
-	
 }

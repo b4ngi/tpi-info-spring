@@ -17,17 +17,30 @@ import org.springframework.dao.DataIntegrityViolationException;
 public class ControllerAdvisorGlobalException extends ResponseEntityExceptionHandler {
     
 	@ExceptionHandler(KeyNotEqual.class)
-    public ResponseEntity<Object> handleOrganizationKeyNotEqual() {
-        
+    public ResponseEntity<Object> handleKeyNotEqual() {
         Map<String,Object> response = new HashMap<>();
         response.put("message", "Clave incorrecta.");
         return new ResponseEntity<Object>(response, HttpStatus.NOT_FOUND);
     }
 	
+	@ExceptionHandler(KeyIsNull.class)
+	public ResponseEntity<Object> handleKeyIsNull(){
+        Map<String,Object> response = new HashMap<>();
+        response.put("message", "Para realizar esta accion se necesita la clave");
+        return new ResponseEntity<Object>(response, HttpStatus.NOT_FOUND);
+	}
+	
 	@ExceptionHandler(PersonaNoEncontrada.class)
 	public ResponseEntity<Object> handlePersonaNoEncontrada() {
         Map<String,Object> response = new HashMap<>();
         response.put("message", "Persona no encontrada.");
+        return new ResponseEntity<Object>(response, HttpStatus.NOT_FOUND);
+	}
+	
+	@ExceptionHandler(OrganizacionNoEncontrada.class)
+	public ResponseEntity<Object> handleOrganizacionNoEncontrada() {
+        Map<String,Object> response = new HashMap<>();
+        response.put("message", "Organizacion no encontrada.");
         return new ResponseEntity<Object>(response, HttpStatus.NOT_FOUND);
 	}
 	

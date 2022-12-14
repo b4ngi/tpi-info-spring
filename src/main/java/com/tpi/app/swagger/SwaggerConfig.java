@@ -23,7 +23,7 @@ public class SwaggerConfig {
 	public Docket apiDocket() {
 		return new Docket(DocumentationType.SWAGGER_2)
 				.select()
-				.apis(RequestHandlerSelectors.basePackage("com.informatorio.app.restcontroller"))
+				.apis(RequestHandlerSelectors.basePackage("com.tpi.app.restcontroller"))
 				.paths(PathSelectors.any())
 				.build()
 				.apiInfo(getApiInfo())

@@ -1,6 +1,7 @@
 package com.tpi.app.service;
 
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -23,6 +24,9 @@ import com.tpi.app.dao.IOrganizacionDao;
 import com.tpi.app.dto.OrganizacionDto;
 import com.tpi.app.entity.Evento;
 import com.tpi.app.entity.Organizacion;
+import com.tpi.app.exceptions.KeyIsNull;
+import com.tpi.app.exceptions.KeyNotEqual;
+import com.tpi.app.exceptions.OrganizacionNoEncontrada;
 import com.tpi.app.wrapper.OrganizacionWrapper;
 
 @Service
@@ -48,54 +52,69 @@ public class OrganizacionServiceImpl implements IOrganizacionService {
 	
 	@Override
 	public OrganizacionDto guardar(OrganizacionDto organizacionDto) {
-		
 		Organizacion nuevaOrganizacion = OrganizacionWrapper.dtoToEntity(organizacionDto, this.generarClave());
-		//log.info(" "+nuevaOrganizacion.getId());
-		
-		if(nuevaOrganizacion.equals(null)) {
-			return null;
-		}
-		
 		nuevaOrganizacion = organizacionDao.save(nuevaOrganizacion);
 		organizacionDto = OrganizacionWrapper.entityToDto(nuevaOrganizacion);
-		
 		return organizacionDto;
 	}
 	
-	public OrganizacionDto actualizar(Organizacion organizacion, HashMap<String, Object> hashMap) {
-		Organizacion organizacionActualizada = OrganizacionWrapper.hashMapToEntity(organizacion, hashMap);
+	public OrganizacionDto actualizar(OrganizacionDto organizacionDto) {
 		
-		if(organizacionActualizada == null) {
-			return null;
-		}
+		Organizacion organizacion = organizacionDao.findByNombre(organizacionDto.getNombre()).orElseThrow(() -> new OrganizacionNoEncontrada());
 		
-		OrganizacionDto organizacionDto = OrganizacionWrapper.entityToDto(organizacionActualizada);
+		try {
+			if(organizacionDto.getClave().equals(organizacion.getClave())) {
+				organizacion.setNombre(organizacionDto.getNombre());
+				organizacion.setCuit(organizacionDto.getCuit());
+				organizacion.setDireccion(organizacionDto.getDireccion());
+				organizacion.setEmail(organizacionDto.getEmail());
+				organizacion.setTelefono(organizacionDto.getTelefono());
+			} else throw new KeyNotEqual();
+		} catch (Exception e) {throw new KeyIsNull();}
 
-		return organizacionDto;
+		return OrganizacionWrapper.entityToDto(organizacion);
 	}
 	
 	@Override
-	public List<Organizacion> findAll(){
-		return organizacionDao.findAll();
+	public List<OrganizacionDto> findAll(){
+		List<Organizacion> organizaciones = organizacionDao.findAll();
+		List<OrganizacionDto> organizacionesDto = new ArrayList<OrganizacionDto>();
+		for (int i=0;i<organizaciones.size();i++) {
+			//if(!organizaciones.get(i).getEstado()) continue;
+			OrganizacionDto organizacionDto = OrganizacionWrapper.entityToDto(organizaciones.get(i));
+			organizacionesDto.add(organizacionDto);
+		}
+		return organizacionesDto;
 	}
 	
 	@Override
-	public Optional<Organizacion> findById(Long id) {
-		return organizacionDao.findById(id);
+	public OrganizacionDto findById(Long id) {
+		Organizacion organizacion = organizacionDao.findById(id).orElseThrow(() -> new OrganizacionNoEncontrada());
+		return OrganizacionWrapper.entityToDto(organizacion);
 	}
 	
 	@Override
-	public Organizacion findByNombre(String nombre) {
-		return organizacionDao.findByNombre(nombre);
+	public OrganizacionDto findByNombre(String nombre) {
+		Organizacion organizacion = organizacionDao.findByNombre(nombre).orElseThrow(() -> new OrganizacionNoEncontrada());
+		return OrganizacionWrapper.entityToDto(organizacion);
 	}
 	
 	@Override
-	public Organizacion findByCuit(Integer cuit) {
-		return organizacionDao.findByCuit(cuit);
+	public OrganizacionDto findByCuit(Integer cuit) {
+		Organizacion organizacion = organizacionDao.findByCuit(cuit).orElseThrow(() -> new OrganizacionNoEncontrada());
+		return OrganizacionWrapper.entityToDto(organizacion);
 	}
 	
 	@Override
 	public long deleteByNombre(String nombre) {
 		return organizacionDao.deleteByNombre(nombre);
+	}
+	
+	@Override
+	public void eliminar(OrganizacionDto organizacionDto) {
+		Organizacion organizacion = organizacionDao.findByNombre(organizacionDto.getNombre()).orElseThrow(() -> new OrganizacionNoEncontrada());
+		if(organizacionDto.getClave().equals(organizacion.getClave())) {
+			organizacion.setEstado(false);
+		} else throw new KeyNotEqual();
 	}
 }
