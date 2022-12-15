@@ -1,11 +1,14 @@
 # tpi-info-spring
 
+Trabajo realizado para la etapa 3 del info
+Alumno: Benetucci Ignacio DNI: 43110500
+
 Version de java: Java 17
 
 Para iniciar el servidor, setear la informacion de la base de datos de manera correcta --> en aplicattion.properties indicar el nombre de la base de datos a utilizar, el username y el password.
 
 Documentacion Swagger:
-	Iniciar el servidor e ingresar al link: http://localhost:8080/swagger-ui/index.html#/turno-rest-controller
+	Iniciar el servidor e ingresar al link: http://localhost:8080/swagger-ui/index.html#/
 
 	--> Para realizar peticiones a la API, guiarse con la documentacion en Swagger --> Ver ejemplos de los bodys.
 
