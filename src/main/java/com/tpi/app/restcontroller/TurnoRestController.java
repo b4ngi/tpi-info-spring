@@ -28,7 +28,7 @@ public class TurnoRestController {
 	@PostMapping("/registrar")
 	public ResponseEntity<Map<String, Object>> nuevoTurno(@RequestBody TurnoDto turnoDto){
 		Map<String, Object> response = new HashMap<>();
-		response.put("evento", turnoService.guardar(turnoDto));
+		response.put("turno", turnoService.guardar(turnoDto));
 		response.put("mensaje", "Turno guardado con exito");
 		return new ResponseEntity<Map<String,Object>>(response, HttpStatus.OK);
 	}
