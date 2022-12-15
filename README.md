@@ -9,7 +9,7 @@ Documentacion Swagger:
 
 	--> Para realizar peticiones a la API, guiarse con la documentacion en Swagger --> Ver ejemplos de los bodys.
 
-	Link con algunas pruebas realizadas: https://drive.google.com/file/d/1wmK0UiVwGVgOKNadfILHbOHmeKnzQFPS/view?usp=sharing
+Link con algunas pruebas realizadas: https://drive.google.com/file/d/1wmK0UiVwGVgOKNadfILHbOHmeKnzQFPS/view?usp=sharing
 
 Funcionalidades API
 
