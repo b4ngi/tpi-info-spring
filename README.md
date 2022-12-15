@@ -9,7 +9,7 @@ Documentacion Swagger:
 
 	--> Para realizar peticiones a la API, guiarse con la documentacion en Swagger --> Ver ejemplos de los bodys.
 
-Funcionalidades API:
+Funcionalidades API
 
 	Organizaciones
 		-> Registrar una organizacion
