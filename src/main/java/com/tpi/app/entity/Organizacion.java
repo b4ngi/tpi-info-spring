@@ -30,7 +30,7 @@ public class Organizacion {
 	private String nombre;
 	
 	@NotNull(message = "El cuit no puede ser nulo")
-	@Size(min = 10, max = 10, message = "El CUIT debe tener 10 digitos")
+	@Size(min = 11, max = 11, message = "El CUIT debe tener 11 digitos")
 	@Column(name = "cuit_organizacion", nullable=false, unique=true)
 	private String cuit;
 	
