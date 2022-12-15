@@ -9,6 +9,8 @@ Documentacion Swagger:
 
 	--> Para realizar peticiones a la API, guiarse con la documentacion en Swagger --> Ver ejemplos de los bodys.
 
+	Link con algunas pruebas realizadas: https://drive.google.com/file/d/1wmK0UiVwGVgOKNadfILHbOHmeKnzQFPS/view?usp=sharing
+
 Funcionalidades API
 
 	Organizaciones
@@ -47,4 +49,5 @@ Funcionalidades API
 	-> Se manejan la mayoria de los errores con un controller advice.
 
 A mejorar:
-	-> El manejo de las fechas
+	-> Manejo de fechas (ingresar y mostrar)
+	-> Algunas funcionalidades con respecto a las fechas en los turnos no están implementadas(hacerlo en un futuro).
