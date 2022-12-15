@@ -10,6 +10,7 @@ Documentacion Swagger:
 	--> Para realizar peticiones a la API, guiarse con la documentacion en Swagger --> Ver ejemplos de los bodys.
 
 Funcionalidades API:
+
 	Organizaciones
 		-> Registrar una organizacion
 		-> Modificar atributos de una organizacion -> Requiere clave de organizacion
@@ -42,7 +43,7 @@ Funcionalidades API:
 		-> Buscar todos los turnos activos por organizacion
 		-> Buscar todos los turnos activos de un evento de una organizacion
 
-	-> Las claves de Persona y de Organizacion se generan son strings de 8 caracteres autogenerados.
+	-> Las claves de Persona y de Organizacion son strings de 8 caracteres autogenerados.
 	-> Se manejan la mayoria de los errores con un controller advice.
 
 A mejorar:
