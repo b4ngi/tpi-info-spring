@@ -10,6 +10,9 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.Future;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 @Entity
 @Table(name = "turnos")
@@ -25,6 +28,8 @@ public class Turno {
 	@Column(name = "fecha_alta")
 	private Date fechaCreacion;
 	
+	@Future(message = "Debe ingresar una fecha en el futuro")
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy hh:mm:ss")
 	@Column(name = "fecha_evento")
 	private Date fechaEvento;
 	

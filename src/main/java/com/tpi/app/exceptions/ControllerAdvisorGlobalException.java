@@ -65,6 +65,13 @@ public class ControllerAdvisorGlobalException extends ResponseEntityExceptionHan
         return new ResponseEntity<Object>(response, HttpStatus.NOT_FOUND);
 	}
 	
+	@ExceptionHandler(FechaTurnoRecurrenteOcupada.class)
+	public ResponseEntity<Object> handleFechaTurnoRecurrenteOcupada() {
+        Map<String,Object> response = new HashMap<>();
+        response.put("message", "La fecha solicitada no está disponible");
+        return new ResponseEntity<Object>(response, HttpStatus.CONFLICT);
+	}
+	
 	@ExceptionHandler(javax.validation.ConstraintViolationException.class)
 	public ResponseEntity<Object> constraintViolationException(javax.validation.ConstraintViolationException e){
         Map<String,Object> response = new HashMap<>();

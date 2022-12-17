@@ -12,6 +12,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.Future;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 
@@ -39,8 +40,9 @@ public class Evento {
 	@Column(name = "fecha_creacion_evento")
 	private Date fechaCreacion;
 	
-	@JsonFormat(pattern="yyy-MM-dd HH:mm:ss")
+	//@JsonFormat(pattern="yyy-MM-dd HH:mm:ss")
 	//@Pattern(regexp="yyy-MM-dd HH:mm:ss", message="formato de fecha invalido")
+	@Future(message = "Debe ingresar una fecha en el futuro")
 	@Column(name = "fecha_realizacion_evento")
 	private Date fechaRealizacion;
 	

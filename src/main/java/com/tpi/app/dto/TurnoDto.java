@@ -3,11 +3,14 @@ package com.tpi.app.dto;
 import java.io.Serializable;
 import java.util.Date;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 public class TurnoDto implements Serializable{
 	
 	private static final long serialVersionUID = 1L;
 	
 	private String codigo;
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy hh:mm:ss")
 	private Date fechaEvento;
 	private String dniPersona;
 	private String nombreOrganizacion;

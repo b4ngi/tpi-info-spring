@@ -9,6 +9,7 @@ import com.tpi.app.entity.Turno;
 import com.tpi.app.exceptions.FechaNecesaria;
 
 public class TurnoWrapper {
+	
 	public static Turno dtoToEntity(TurnoDto dto, Persona persona, Evento evento) {
 		if(dto == null) return new Turno();
 		
@@ -20,12 +21,13 @@ public class TurnoWrapper {
 		entity.setEstado(true);
 		
 		if(evento.getFechaRealizacion() == null) {
-			entity.setFechaEvento(dto.getFechaEvento());
+				entity.setFechaEvento(dto.getFechaEvento());
 		} else {
 			entity.setFechaEvento(evento.getFechaRealizacion());
 		}
 		
 		if (entity.getFechaEvento() == null) throw new FechaNecesaria();
+		
 		
 		return entity;
 	}

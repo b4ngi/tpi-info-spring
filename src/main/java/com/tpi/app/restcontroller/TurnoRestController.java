@@ -3,6 +3,8 @@ package com.tpi.app.restcontroller;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,7 +28,7 @@ public class TurnoRestController {
 	private ITurnoService turnoService;
 	
 	@PostMapping("/registrar")
-	public ResponseEntity<Map<String, Object>> nuevoTurno(@RequestBody TurnoDto turnoDto){
+	public ResponseEntity<Map<String, Object>> nuevoTurno(@Valid @RequestBody TurnoDto turnoDto){
 		Map<String, Object> response = new HashMap<>();
 		response.put("turno", turnoService.guardar(turnoDto));
 		response.put("mensaje", "Turno guardado con exito");

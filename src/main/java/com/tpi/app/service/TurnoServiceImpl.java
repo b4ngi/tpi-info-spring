@@ -1,5 +1,8 @@
 package com.tpi.app.service;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,6 +20,7 @@ import com.tpi.app.entity.Organizacion;
 import com.tpi.app.entity.Persona;
 import com.tpi.app.entity.Turno;
 import com.tpi.app.exceptions.EventoNoEncontrado;
+import com.tpi.app.exceptions.FechaTurnoRecurrenteOcupada;
 import com.tpi.app.exceptions.KeyNotEqual;
 import com.tpi.app.exceptions.OrganizacionNoEncontrada;
 import com.tpi.app.exceptions.PersonaNoEncontrada;
@@ -25,7 +29,7 @@ import com.tpi.app.wrapper.TurnoWrapper;
 @Service
 @Transactional
 public class TurnoServiceImpl implements ITurnoService {
-
+	private static final Logger log = LoggerFactory.getLogger(TurnoServiceImpl.class);
 	@Autowired
 	private ITurnoDao turnoDao;
 	
@@ -44,6 +48,18 @@ public class TurnoServiceImpl implements ITurnoService {
 		Organizacion organizacion = organizacionDao.findByNombre(turnoDto.getNombreOrganizacion()).orElseThrow(() -> new OrganizacionNoEncontrada());
 		
 		for(Evento evento: organizacion.getEventos()) {
+			
+			if(evento.getEstado() && evento.getTipo().equals("recurrente")) {
+				for(Turno turno: evento.getTurnos()) {
+					log.info("entity: "+turno.getFechaEvento().getTime());
+					log.info("dto: "+turnoDto.getFechaEvento().getTime());
+					if(turno.getFechaEvento().getDay() == turnoDto.getFechaEvento().getDay()
+						&& turno.getFechaEvento().getMonth() == turnoDto.getFechaEvento().getMonth()
+						&& turno.getFechaEvento().getYear() == turnoDto.getFechaEvento().getYear()
+						&& turno.getFechaEvento().getTime() == turnoDto.getFechaEvento().getTime() ) throw new FechaTurnoRecurrenteOcupada();
+				}
+			}
+			
 			if(evento.getEstado() && evento.getNombre().equals(turnoDto.getNombreEvento())) {
 				Turno nuevoTurno = TurnoWrapper.dtoToEntity(turnoDto, persona, evento);
 				nuevoTurno = turnoDao.save(nuevoTurno);
