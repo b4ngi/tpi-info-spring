@@ -13,6 +13,7 @@ Documentacion Swagger:
 	--> Para realizar peticiones a la API, guiarse con la documentacion en Swagger --> Ver ejemplos de los bodys.
 
 Link con algunas pruebas realizadas: https://drive.google.com/file/d/1wmK0UiVwGVgOKNadfILHbOHmeKnzQFPS/view?usp=sharing
+Estas pruebas fueron realizadas antes de mejorar el manejo de las fechas en los turnos y eventos.
 
 Funcionalidades API
 
@@ -36,6 +37,7 @@ Funcionalidades API
 		-> Registrar un evento -> Requiere nombre de organizacion y clave de organizacion
 			-> Si se ingresa una "fechaRealizacion", se deduce que el evento es de tipo UNICO
 			-> Si no se ingresa una "fechaRealizacion", se deduce que el evento es de tipo RECURRENTE
+			-> Debe ingresarse una fecha en el futuro. Si se ingresa una fecha en el pasado, se muestra mensaje de error.
 		-> Modificar atributos de un evento -> Requiere nombre de organizacion y clave de organizacion
 		-> Eliminar un evento -> Requiere nombre de organizacion y clave de organizacion
 		-> Buscar todos los eventos activos
@@ -45,6 +47,8 @@ Funcionalidades API
 		-> Registrar un turno -> Requiere nombre de organizacion, dni de persona, nombre de evento
 			-> Si el evento ingresado es de tipo RECURRENTE, se debe ingresar una "fechaEvento" para asentar el registro del evento
 			-> Si el evento ingresado es de tipo UNICO, la "fechaEvento" es la misma que la fecha de realizacion del evento
+			-> Para un evento RECURRENTE debe ingresarse una fecha en el futuro. Si se ingresa una fecha en el pasado, se muestra mensaje de error.
+			-> Para un evento recurrente: si se ingresa una fecha(fecha y hora) que ya está ocupada por otro turno, no permite registrar el turno.
 		-> Buscar todos los turnos activos por organizacion
 		-> Buscar todos los turnos activos de un evento de una organizacion
 
@@ -52,5 +56,4 @@ Funcionalidades API
 	-> Se manejan la mayoria de los errores con un controller advice.
 
 A mejorar:
-	-> Manejo de fechas (ingresar y mostrar)
-	-> Algunas funcionalidades con respecto a las fechas en los turnos no están implementadas(hacerlo en un futuro).
+	-> Mostrar mensaje de error al ingresar una fecha que no siga el patron "dd-MM-yyyy hh:mm:ss" al registrar evento o turno.
