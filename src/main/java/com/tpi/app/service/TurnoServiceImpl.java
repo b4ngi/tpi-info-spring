@@ -51,8 +51,8 @@ public class TurnoServiceImpl implements ITurnoService {
 			
 			if(evento.getEstado() && evento.getTipo().equals("recurrente")) {
 				for(Turno turno: evento.getTurnos()) {
-					log.info("entity: "+turno.getFechaEvento().getTime());
-					log.info("dto: "+turnoDto.getFechaEvento().getTime());
+					//log.info("entity: "+turno.getFechaEvento());
+					//log.info("dto: "+turnoDto.getFechaEvento());
 					if(turno.getFechaEvento().getDay() == turnoDto.getFechaEvento().getDay()
 						&& turno.getFechaEvento().getMonth() == turnoDto.getFechaEvento().getMonth()
 						&& turno.getFechaEvento().getYear() == turnoDto.getFechaEvento().getYear()
